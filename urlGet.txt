@@ -1,0 +1,10 @@
+http:///127.0.0.1:8000/api/sign_up/combine_profile
+http://127.0.0.1:8000/api/sign_up/signIn
+http://127.0.0.1:8000/api/sign_up
+http://127.0.0.1:8000/api/sign_up/otp
+http://127.0.0.1:8000/api/sign_up/combine_profile
+http://127.0.0.1:8000/api/franzo
+http://127.0.0.1:8000/api/aboutMe
+http://127.0.0.1:8000/api/preferences
+http://127.0.0.1:8000/api/friends
+http://127.0.0.1:8000/api/friends/pending
