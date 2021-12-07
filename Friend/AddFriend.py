@@ -30,7 +30,7 @@ class AddFriend(APIView):
             # model = course
             # print(model)
             sample = serializer.data[i]
-            print("sample:->> ", sample['FuserId'])
+            print("sample:->> ", sample['FuserId'],"sample type==>",type(sample))
             sample['name']=''
             print(sample['FriendId']==1)
             if (sample['FriendId']== int(userId) ):

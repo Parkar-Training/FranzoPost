@@ -65,6 +65,7 @@ urlpatterns = [
     path(r'api/sign_up/combine_profile', views.Homepage, name='homepage'),
     path(r'api/franzo', views.welcome, name= 'welcomePage'),
     path(r'api/sign_up/combine_profile/aboutMe', views.aboutMe, name = 'AboutMe'),
+    #path(r'api/sign_up/postPost',views.postPosts,name='Posts'),
 
     #path(r'api/sign_up/otp', views.otp, name='otp'),
 #--------user api---------------------

@@ -22,7 +22,7 @@ var otp_from_back = "";
             async: false,
             $.ajax({
                 type: "POST",
-                url: 'http://127.0.0.1:8000/api/sign_up',
+                url: 'http://192.168.0.104:8000/api/sign_up',
                 data: params,
                 dataType: 'json',
 
@@ -43,7 +43,7 @@ var otp_from_back = "";
             alert('Success!'),
             otp_from_back = data,
             console.log("otp from backend", otp_from_back),
-            location.href = 'http:///127.0.0.1:8000/api/sign_up/otp',
+            location.href = 'http:///192.168.0.104:8000/api/sign_up/otp',
             console.log("next page is otp");
             //alert(data);
             if (data == 'success') {

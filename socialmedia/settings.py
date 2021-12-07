@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-_vt1--pp6i^a%kuv!+r9o3_s6wcgdp$=l-m(&+ftp03a$3#)o0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1','192.168.0.104', '10.50.30.52','.ngrok.io']
 
 
 # Application definition
@@ -86,12 +86,13 @@ WSGI_APPLICATION = 'socialmedia.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+#'HOST': '127.0.0.1',
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'mydb',
-        'HOST': '127.0.0.1',
+        'HOST': '192.168.0.104',
         'PORT': '3306',
         'USER': 'root',
         'PASSWORD': 'root',

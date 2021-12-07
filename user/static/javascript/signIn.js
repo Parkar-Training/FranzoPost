@@ -24,7 +24,7 @@ const form = document.getElementById('formLogin');
         async: false,
         $.ajax({
             type: "POST",
-            url: 'http://127.0.0.1:8000/api/sign_up/signIn',
+            url: 'http://192.168.0.104:8000/api/sign_up/signIn',
 
             data: params,
             dataType: 'json',
@@ -56,7 +56,7 @@ const form = document.getElementById('formLogin');
 
         console.log("next page is otp 10"),
 
-        location.href = 'http:///127.0.0.1:8000/api/sign_up/combine_profile';
+        location.href = 'http://192.168.0.104:8000/api/sign_up/combine_profile';
 
 
     }

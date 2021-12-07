@@ -235,8 +235,7 @@
                     <div class="card-body">
                         <h3 class="h">Profile</h3>
                         <hr>
-                        <center><img class="image1" src="/static/images/profileLogo.jpg
-"></center>
+                        <center><img class="image1" src="/static/images/profileLogo.jpg"></center>
                         <h4 class="hyper" id="user-name"> <script>
                           document.getElementById("user-name").innerHTML= localStorage.getItem("AP");
                         </script></h4>
@@ -260,36 +259,31 @@
               <div style="display: inline-block;  ">
                 <form class="d-flex" style="margin-left: 165px;" id="formPost" method="POST">
                     <!--<input type="text" placeholder="  What's on your Mind??" style="width: 380px; border-radius: 20px; height: 70px;" >-->
-                    <textarea placeholder="what's on your mind" rows="3" cols="60" style="width: 380px; border-radius: 20px; height: 70px;"></textarea>
-                    <button class="btn btn-primary" style="height: 35px; width: 100px; background-color: rgb(232, 212, 252); color: black; margin-top: 15px;" type="button" >Post</button>
+                    <textarea class="Post_data" id="Post_data" name="Post_data" placeholder="what's on your mind" rows="3" cols="60" style="width: 380px; border-radius: 20px; height: 70px;"></textarea>
+                    <button onclick="test()" class="btn btn-primary" id="submit" style="height: 35px; width: 100px; background-color: rgb(232, 212, 252); color: black; margin-top: 15px;" type="submit" >Post</button>
 
                   </form>
             </div>
           
             <div class="card2" style="margin-top: 0px; margin-left: 160px; width: 500px; margin-top: 10px;">
               <section class="newsfeed">
-                  {% for getAllPost in PostData %}
-                  {% for  %}
+                  {% for Homepage in getModel %}
+
               <div class="card2">
                         <div class="details">
-                            <h3> {{ getAllPost.PUserId }} Pranjali Sharma</h3>
-                            <p class="posted">{{getAllPost.Post_Time}}</p>
-       
+                            <h5><strong><pre> {{ Homepage.PUserId }}{{Homepage.name}}</pre></strong></h5>
+                            <p class="posted">{{Homepage.Post_Time}}</p>
+
                          </div>
                       
        
                       <div class="desc">
-                          {{getAllPost.Post_data}}
+                          {{Homepage.Post_data}}
                       </div>
-                      
-                      <!--div class="tags">
-                          <span>#party</span>
-                          <span>#colorfull</span>
-                      </div-->
                       <div class="footer">
-                          <div class="like">
-                              <button class="glyphicon glyphicon-heart" name="like" id="like{{post.id}}" href="#" data-catid="{{ post.id }}"></button>
-                              <span>{{getAllPost.Like_count}}</span>
+                          <div class="like" id="like_count">
+                              <button class="glyphicon glyphicon-heart" name="like" id="like" href="#" data-catid="{{ post.id }}"></button>
+                              <span>{{Homepage.Like_count}}</span>
                           </div>
                           <!--div class="edit">
                               <button class="glyphicon glyphicon-edit" type="submit" name="Edit" id="edit" style="margin-right:60px;background: lavender; border: None; "></button>
@@ -298,7 +292,8 @@
                             <button class="glyphicon glyphicon-trash" type="submit" name="delete" id="delete" style="margin-right: 10px; background: lavender; border: None;"></button>
         
                            </div>
-                           
+
+
                       </div>
                   {% endfor %}
 

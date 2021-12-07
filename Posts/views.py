@@ -7,10 +7,13 @@ from Posts.models import Post
 from Posts.postSerialization import post_Class
 
 
+
 def getAllPost(request):
     print("inside get function")
     model = Post.objects.all()
     print("get start function\n models--->", model, "type of model---->", type(model))
+
+
     #getdata = request.POST.get('getdata', 'None')
     #print("getdata--->", getdata, "type of getdata", type(getdata))
     # serializer = serializerClass(model,many=True)

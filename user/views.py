@@ -3,7 +3,7 @@
 import datetime
 import hashlib
 
-
+from django.contrib.auth.decorators import login_required
 from django.http import QueryDict
 from django.views.decorators.http import require_http_methods
 from requests import post
@@ -81,6 +81,8 @@ def users_new2(request):
         # l = copy_GET.getlist('a')
         # l.append(u'4')
         # copy_GET.setlist('a', l)
+        userData = request.POST.dict()
+        print("\n\n\n\nUSer Data--->>>>>",userData,"\n\n\ntype---->>>",type(userData))
         form = serializerClass(data=request.POST)
         # print("data form variable: ---", type(form))
         # print("type req post ", type(request.POST))
@@ -197,20 +199,75 @@ def signIn(request):
     return render(request,'user/templates/html_files/sign_in.html')
 
 from Posts.models import *
+
+
+
+getModel = {}
+sample = []
 @api_view(['GET', 'POST'])
 def Homepage(request):
+    global getModel
+    global sample
+
     if request.method=='GET':
         print("Inside Homepage---->")
-        #getData = models.
-        #print("getData-->", request.data([post_Class]))
-        model = Post.objects.all().filter(**request.data)
-        print("model---->",model,"\n type of model--->",type(model))
-        PostData = getAllPost(model.values_list())
+        model = Post.objects.all()
+        model = model | Post.objects.all().order_by('-Post_Time').filter(**request.data)
+        print("get start function\n models--->", model, "type of model---->", type(model))
+        serializer = post_Class(model, many=True)
+        print("Serializer--->", serializer.data)
 
-        getModel = users_new.objects.all()
-        print("get model of users---->>>>",getModel,"\n\n\nType---->>>>>",type(getModel))
-        print("\n\n\n\nvalue of post data--->", PostData)
-    return render(request, 'user/templates/html_files/combine_profile.html',{'PostData':PostData})
+        getModel = serializer.data
+
+
+
+        print("\n\nget model of users---->>>>",len(getModel),"\n\n\nType---->>>>>",type(request.data))
+
+        names=[]
+        for i in range(len(getModel)):
+            #sample = list(model.values_list()[i])
+            sample = serializer.data[i]
+            print("sample ", sample,"type of sample---->",type(sample))
+            #names.append(sample[1])
+            sample['name']=''
+            sampleList = list(users_new.objects.all().filter(**request.data).values_list()[i])
+            print("sample list se user id--->>>",sampleList,"\n\nsample list indexx--->",sampleList.index(0))
+
+            names.append(sampleList[1])
+            sample['name'] = names[i]
+            print("Post Users names: ", names)
+            print("sample list::: ", sample)
+        return render(request, 'user/templates/html_files/combine_profile.html',{'getModel':getModel,'sample':sample})
+
+    if request.method=='POST':
+        print("data print-->>> ", request.data)
+        request.data._mutable=True
+        request.data['userId']= 9
+        print("\n\n\n\nni  ajaaaaaaaaaaa->>>>>>>>>>>>>>>>>>", request.data)
+
+        check={}
+        check['Post_data']= request.data['Post_data']
+        check['PuserId']= request.data['userId']
+        print("\n\n\n\najaaaaaaaa->>>>>>>>>>>>>>>>>>", request.data,"----",check)
+        serializer = post_Class(data=check)
+        print("serializer",serializer)
+
+        if (serializer.is_valid()):
+            print("\n\n\inside validdd\n\n")
+            serializer.save()
+            print("\n\n---------------------")
+            print("data post: ", serializer.data)
+            print("data post type : ", type(serializer.data))
+            print("\n-----------------------")
+            #return Response(serializer.data, status=status.HTTP_200_OK)
+            return render(request, 'user/templates/html_files/combine_profile.html',
+                         {'getModel': getModel, 'sample': sample})
+
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    #return render(request,'user/templates/html_files/combine_profile.html',{'getModel':getModel,'sample':sample})
+    #return render(request, 'user/templates/html_files/combine_profile.html',{'getModel':getModel,'sample':sample})
 
 def aboutMe(request):
     return render(request, 'user/templates/html_files/about_me_dummy.html')
@@ -262,13 +319,19 @@ def welcome(request):
 def pending(request):
     return render(request, 'user/templates/html_files/pending_request.html')
 
-'''def likePost(request):
+
+@login_required
+def likePost(request):
+    PuserId = None
     if request.method == 'GET':
-        post_id = request.GET['post_id']
-        likedpost = Post.objects.get(pk=post_id)  # getting the liked posts
-        m = Like(post=likedpost)  # Creating Like Object
-        m.save()  # saving it to store in database
-        return HttpResponse("Success!")  # Sending an success response
-    else:
-        return HttpResponse("Request method is not a GET")
-'''
+        PuserId = request.GET['category_id']
+
+        likes = 0
+        if PuserId:
+            cat = Post.objects.get(id=int(PuserId))
+            if cat:
+                likes = cat.likes + 1
+                cat.likes = likes
+                cat.save()
+
+    return HttpResponse(likes)
